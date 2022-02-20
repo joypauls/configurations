@@ -42,14 +42,31 @@ rotate_z <- function(theta) {
 }
 
 
+methodEnum <- list(ANGLE="ANGLE", AVRO="AVRO")
+
 # return 3x3
 # pure function
 # can use general formula instead! faster!
-random_rotation <- function() {
-  angles <- runif(3, 0, 2*pi)
-  return(
-    rotate_z(angles[3]) %*% rotate_y(angles[2]) %*% rotate_x(angles[1])
-  )
+random_rotation <- function(type=methodEnum$ANGLE) {
+  if (type == methodEnum$ANGLE) {
+    angles <- 2 * pi * runif(3, 0, 1)
+    return(
+      rotate_z(angles[3]) %*% rotate_y(angles[2]) %*% rotate_x(angles[1])
+    )
+  } else if (type == methodEnum$AVRO) {
+    u <- runif(3, 0, 1)
+    v <- c(
+      cos(2 * pi * u[2]) * sqrt(u[3]), 
+      sin(2 * pi * u[2]) * sqrt(u[3]), 
+      sqrt(1 - u[3])
+    )
+    h <- diag(3) - (2 * (v %*% t(v)))
+    return(
+      -h %*% rotate_z(u[3] * 2 * pi)
+    )
+  } else {
+    stop("Wrong type")
+  }
 }
 
 
@@ -89,30 +106,31 @@ plot_rotations <- function(n=10) {
   }
   df <- coords_to_df(vectors)
   ggplot(df, aes(x, y)) +
-    geom_point(alpha=0.05, size=0.03) + 
+    geom_point(alpha=0.5, size=0.05, stroke=0.1, color="#000000") + 
     theme_void()
 }
 
-plot_rotations(30000)
+plot_rotations(20000)
 
-ggsave("test_cube.png", units="px", width=2000, height=2000, bg="#ffffff", dpi="retina")
+# ggsave("test_cube.png", units="px", width=2000, height=2000, bg="#2f2633", dpi="retina")
+ggsave("test_cube_avro.png", units="px", width=2000, height=2000, bg="#FFFFFF", dpi="retina")
 
 
 
-plot_rotations <- function(n=10) {
-  vectors <- projection(random_rotation() %*% (unit_cube))
-  for (i in 1:(n-1)) {
-    vectors <- cbind(vectors, projection(random_rotation() %*% (unit_cube)))
-  }
-  df <- coords_to_df(vectors)
-  ggplot(df, aes(x, y)) +
-    geom_point(alpha=0.05, size=0.03) + 
-    theme_void()
-}
-
-plot_rotations(30000)
-
-ggsave("test_cube2.png", units="px", width=2000, height=2000, bg="#ffffff", dpi="retina")
+# plot_rotations <- function(n=10) {
+#   vectors <- projection(random_rotation() %*% (unit_cube))
+#   for (i in 1:(n-1)) {
+#     vectors <- cbind(vectors, projection(random_rotation() %*% (unit_cube)))
+#   }
+#   df <- coords_to_df(vectors)
+#   ggplot(df, aes(x, y)) +
+#     geom_point(alpha=0.1, size=0.03, stroke=0) + 
+#     theme_void()
+# }
+# 
+# plot_rotations(10000)
+# 
+# ggsave("test_cube2.png", units="px", width=2000, height=2000, bg="#ffffff", dpi="retina")
 
 
 
