@@ -1,2 +1,5 @@
 *.png
 *.Rproj*
+.Rproj.user
+*.Rcheck*
+.Rhistory

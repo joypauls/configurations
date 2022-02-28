@@ -106,14 +106,20 @@ plot_rotations <- function(n=10) {
   }
   df <- coords_to_df(vectors)
   ggplot(df, aes(x, y)) +
-    geom_point(alpha=0.5, size=0.05, stroke=0.1, color="#000000") + 
+    geom_point(alpha=0.2, size=0.05, stroke=0.1, color="#FFFFFF") + 
     theme_void()
 }
 
-plot_rotations(20000)
+# plot_rotations(20000)
 
 # ggsave("test_cube.png", units="px", width=2000, height=2000, bg="#2f2633", dpi="retina")
-ggsave("test_cube_avro.png", units="px", width=2000, height=2000, bg="#FFFFFF", dpi="retina")
+# ggsave("test_cube_avro.png", units="px", width=2000, height=2000, bg="#FFFFFF", dpi="retina")
+
+plot_rotations(50000)
+
+# ggsave("test_cube.png", units="px", width=2000, height=2000, bg="#2f2633", dpi="retina")
+ggsave("test_cube.png", units="px", width=2000, height=2000, bg="#2f2633", dpi="retina")
+
 
 
 

@@ -85,7 +85,7 @@ plot_rotations <- function(n=10) {
   }
   df <- coords_to_df(vectors)
   ggplot(df, aes(x, y)) +
-    geom_point(alpha=0.5, size=0.05, stroke=0.1, color="#000000") + 
+    geom_point(alpha=0.2, size=0.05, stroke=0.1, color="#000000") + 
     theme_void()
 }
 
