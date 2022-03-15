@@ -1,31 +1,35 @@
 IDENTITY_MATRIX <- diag(3)
 
+
 #' is_rotation checker
 #'
 #' @param m A matrix
 #' @return boolean
 #' @export
+#'
+#' @examples
+#' is_rotation(diag(3))
 is_rotation <- function(m) {
   if (is.matrix(m)) {
     d <- dim(m)
     mt <- t(m)
-    if ((d[1] == d[2]) && (det(m) == 1) && (m %*% mt == IDENTITY_MATRIX)) {
+    # check if orthonormal with determinant 1
+    if ((d[1] == d[2]) && (det(m) == 1) && ((m %*% mt) == IDENTITY_MATRIX)) {
       return(TRUE)
     }
   }
   return(FALSE)
 }
 
+
 #' Rotate wrt x axis
-#' also is_rotation checker
 #'
 #' @param theta A float
 #' @return a 3x3 matrix
 #' @export
 #'
 #' @examples
-#' x <- "alfa,bravo,charlie,delta"
-#' strsplit1(x, split = ",")
+#' rotate_x(pi)
 rotate_x <- function(theta) {
   return(
     matrix(c(
@@ -36,6 +40,15 @@ rotate_x <- function(theta) {
   )
 }
 
+
+#' Rotate wrt y axis
+#'
+#' @param theta A float
+#' @return a 3x3 matrix
+#' @export
+#'
+#' @examples
+#' rotate_x(pi)
 rotate_y <- function(theta) {
   return(
     matrix(c(
@@ -46,6 +59,15 @@ rotate_y <- function(theta) {
   )
 }
 
+
+#' Rotate wrt z axis
+#'
+#' @param theta A float
+#' @return a 3x3 matrix
+#' @export
+#'
+#' @examples
+#' rotate_x(pi)
 rotate_z <- function(theta) {
   return(
     matrix(c(

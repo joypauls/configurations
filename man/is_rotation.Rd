@@ -15,3 +15,6 @@ boolean
 \description{
 is_rotation checker
 }
+\examples{
+is_rotation(diag(3))
+}

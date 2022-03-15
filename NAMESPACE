@@ -2,3 +2,5 @@
 
 export(is_rotation)
 export(rotate_x)
+export(rotate_y)
+export(rotate_z)
