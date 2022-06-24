@@ -63,8 +63,8 @@ random_rotation <- function(type=methodEnum$ANGLE) {
   } else if (type == methodEnum$AVRO) {
     u <- runif(3, 0, 1)
     v <- c(
-      cos(2 * pi * u[2]) * sqrt(u[3]), 
-      sin(2 * pi * u[2]) * sqrt(u[3]), 
+      cos(2 * pi * u[2]) * sqrt(u[3]),
+      sin(2 * pi * u[2]) * sqrt(u[3]),
       sqrt(1 - u[3])
     )
     h <- diag(3) - (2 * (v %*% t(v)))
@@ -104,22 +104,24 @@ coords_to_df <- function(m) {
 
 
 
-plot_rotations <- function(n=10) {
+plot_rotations <- function(n=10, color="#ffffff") {
   vectors <- projection(random_rotation() %*% (icosa + 0.1))
   for (i in 1:(n-1)) {
     vectors <- cbind(vectors, projection(random_rotation() %*% (icosa + 0.1)))
   }
   df <- coords_to_df(vectors)
   ggplot(df, aes(x, y)) +
-    geom_point(alpha=0.2, size=0.2, stroke=0, color="#FFFFFF") +
+    geom_point(alpha=0.3, size=0.2, stroke=0, color=color) +
     theme_void()
 }
 
-plot_rotations(100000)
+
+plot_rotations(10000, "#000000")
 
 # ggsave("test_cube.png", units="px", width=2000, height=2000, bg="#2f2633", dpi="retina")
-ggsave("test_icosahedron.png", units="px", width=2000, height=2000, bg="#2f2633", dpi="retina")
 
+# ggsave("test_icosahedron.png", units="px", width=2000, height=2000, bg="#2f2633", dpi="retina")
+ggsave("test_icosahedron.png", units="px", width=2000, height=2000, bg="#ffffff", dpi="retina")
 
 
 # plot_rotations <- function(n=10) {
@@ -129,12 +131,12 @@ ggsave("test_icosahedron.png", units="px", width=2000, height=2000, bg="#2f2633"
 #   }
 #   df <- coords_to_df(vectors)
 #   ggplot(df, aes(x, y)) +
-#     geom_point(alpha=0.1, size=0.03, stroke=0) + 
+#     geom_point(alpha=0.1, size=0.03, stroke=0) +
 #     theme_void()
 # }
-# 
+#
 # plot_rotations(10000)
-# 
+#
 # ggsave("test_cube2.png", units="px", width=2000, height=2000, bg="#ffffff", dpi="retina")
 
 

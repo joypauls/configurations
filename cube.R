@@ -81,15 +81,20 @@ coords_to_df <- function(m) {
 #   geom_point()
 
 
+# to exclude origin
+unit_cube_adj <- unit_cube + 1
 
 plot_rotations <- function(n=10) {
-  vectors <- projection(random_rotation() %*% (unit_cube + 1))
+  vectors <- projection(random_rotation() %*% unit_cube_adj)
+
+
   for (i in 1:(n-1)) {
-    vectors <- cbind(vectors, projection(random_rotation() %*% (unit_cube + 1)))
+    vectors <- cbind(vectors, projection(random_rotation() %*% unit_cube_adj))
   }
+
   df <- coords_to_df(vectors)
   ggplot(df, aes(x, y)) +
-    geom_point(alpha=0.2, size=0.05, stroke=0.1, color="#FFFFFF") + 
+    geom_point(alpha=0.2, size=0.05, stroke=0.1, color="#FFFFFF") +
     theme_void()
 }
 
@@ -98,7 +103,10 @@ plot_rotations <- function(n=10) {
 # ggsave("test_cube.png", units="px", width=2000, height=2000, bg="#2f2633", dpi="retina")
 # ggsave("test_cube.png", units="px", width=2000, height=2000, bg="#FFFFFF", dpi="retina")
 
-plot_rotations(100000)
+t0 <- Sys.time()
+plot_rotations(10000)
+t1 <- Sys.time()
+print(t1-t0)
 
 # ggsave("test_cube.png", units="px", width=2000, height=2000, bg="#2f2633", dpi="retina")
 ggsave("test_cube.png", units="px", width=2000, height=2000, bg="#2f2633", dpi="retina")
@@ -111,12 +119,12 @@ ggsave("test_cube.png", units="px", width=2000, height=2000, bg="#2f2633", dpi="
 #   }
 #   df <- coords_to_df(vectors)
 #   ggplot(df, aes(x, y)) +
-#     geom_point(alpha=0.1, size=0.03, stroke=0) + 
+#     geom_point(alpha=0.1, size=0.03, stroke=0) +
 #     theme_void()
 # }
-# 
+#
 # plot_rotations(10000)
-# 
+#
 # ggsave("test_cube2.png", units="px", width=2000, height=2000, bg="#ffffff", dpi="retina")
 
 
